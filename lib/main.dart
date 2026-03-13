@@ -46,12 +46,60 @@ class _TelaSomaState extends State<TelaSoma>{
 
 
   //Inicio do Front-end da aplicação
-  Widget build(BuildContext){
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Calculadora em Flutter"),
+        backgroundColor: Color.fromARGB(0, 54, 1, 63),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            //Input
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: numero1Controller, //Numero 1
+              decoration: const InputDecoration(
+                labelText: 'Digite o primero número', //Texto dentro da input
+                border: OutlineInputBorder(), //Borda da input
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            //Input
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: numero2Controller, //Numero 2
+              decoration: const InputDecoration(
+                labelText: 'Digite o segundo número', //Texto dentro da input
+                border: OutlineInputBorder(), //Borda da input
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            //Botão
+            ElevatedButton(
+              onPressed: somar, //"On Click" do Js
+              child: const Text('Somar'),//Texto do botão
+            ),
+            const SizedBox(height: 20),
+
+            //Resultado Soma
+            Text(
+              "Resultado: $resultado",
+              style: TextStyle(
+                fontSize: 24,
+              ),
+            )
+
+
+          ],
+        ),
+      ),
+    );
 
   }
-
-
-
-
-
 }
