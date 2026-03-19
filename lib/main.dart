@@ -11,13 +11,13 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const TelaSoma(),
+      home: TelaSoma(),
     );
   }
 }
 
 //Inicio TelaSoma
-class TelaSoma extends StatefulWidget{
+class TelaSoma extends StatefulWidget {
   const TelaSoma({super.key});
 
   @override
@@ -25,34 +25,63 @@ class TelaSoma extends StatefulWidget{
 }
 
 //TelaSomaState: Classe onde é feita a lógica
-class _TelaSomaState extends State<TelaSoma>{
+class _TelaSomaState extends State<TelaSoma> {
   //Inputs para digitação dos valores a serem somados:
   final TextEditingController numero1Controller = TextEditingController();
   final TextEditingController numero2Controller = TextEditingController();
 
-  double resultado=0;
+  double resultado = 0;
 
-  void somar(){
-    double n1=double.tryParse(numero1Controller.text) ?? 0;
-    double n2=double.tryParse(numero2Controller.text) ?? 0;
+  void somar() {
+    double n1 = double.tryParse(numero1Controller.text) ?? 0;
+    double n2 = double.tryParse(numero2Controller.text) ?? 0;
 
     //Atualizar front
     setState(() {
-      resultado = n1+n2;
-      
+      resultado = n1 + n2;
     });
+  } //Fim do somar
 
-  }//Fim do somar
+  void subtrair() {
+    double n1 = double.tryParse(numero1Controller.text) ?? 0;
+    double n2 = double.tryParse(numero2Controller.text) ?? 0;
 
+    setState(() {
+      resultado = n1 - n2;
+    });
+  }
+
+  void multiplicar() {
+    double n1 = double.tryParse(numero1Controller.text) ?? 0;
+    double n2 = double.tryParse(numero2Controller.text) ?? 0;
+
+    setState(() {
+      resultado = n1 * n2;
+    });
+  }
+
+  void dividir() {
+    double n1 = double.tryParse(numero1Controller.text) ?? 0;
+    double n2 = double.tryParse(numero2Controller.text) ?? 0;
+
+    setState(() {
+      if (n2 != 0) {
+        resultado = n1 / n2;
+      } else {
+        resultado = 0; // Evita divisão por zero
+      }
+    });
+  }
 
   //Inicio do Front-end da aplicação
-  Widget build(BuildContext context){
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Calculadora em Flutter"),
-        backgroundColor: Color.fromARGB(0, 54, 1, 63),
+        backgroundColor: const Color.fromARGB(255, 54, 1, 63), 
+        foregroundColor: Colors.white, // Deixa o texto do título branco
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -63,7 +92,7 @@ class _TelaSomaState extends State<TelaSoma>{
               keyboardType: TextInputType.number,
               controller: numero1Controller, //Numero 1
               decoration: const InputDecoration(
-                labelText: 'Digite o primero número', //Texto dentro da input
+                labelText: 'Digite o primeiro número', //Texto dentro da input
                 border: OutlineInputBorder(), //Borda da input
               ),
             ),
@@ -80,26 +109,40 @@ class _TelaSomaState extends State<TelaSoma>{
             ),
             const SizedBox(height: 20),
 
-            //Botão
-            ElevatedButton(
-              onPressed: somar, //"On Click" do Js
-              child: const Text('Somar'),//Texto do botão
+            //Botões
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: somar, //"On Click" do Js
+                  child: const Text('Somar'), //Texto do botão
+                ),
+                ElevatedButton(
+                  onPressed: subtrair, 
+                  child: const Text('Subtrair'),
+                ),
+                ElevatedButton(
+                  onPressed: multiplicar, 
+                  child: const Text('Multiplicar'),
+                ),
+                ElevatedButton(
+                  onPressed: dividir, 
+                  child: const Text('Dividir'),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
 
             //Resultado Soma
             Text(
               "Resultado: $resultado",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
               ),
             )
-
-
           ],
         ),
       ),
     );
-
   }
 }
